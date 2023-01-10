@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) throws SQLException{
         //create database books;
         //Wersja dla MySql
-        DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","12345678");
-        //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/testdb",
+        DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","1233456");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","12345678");
         //"postgres", "MyPassword123");
         //tabela na ksiazki:
         String createTableSql = """
@@ -21,7 +21,7 @@ public class Main {
                 );
                 """;
 
-        //connection.createStatement().execute(createTableSql);
+        connection.createStatement().execute(createTableSql);
 
         // "jdbc:mysql://localhost:3306/sonoo","root","root"
 
