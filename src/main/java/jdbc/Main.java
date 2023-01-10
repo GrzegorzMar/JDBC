@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) throws SQLException{
         //create database books;
         //Wersja dla MySql
-        DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","12345678");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","12345678");
+        DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","1986");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","1986");
 
         //tabela na ksiazki:
         String createTableSql = """
