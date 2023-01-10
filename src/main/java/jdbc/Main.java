@@ -1,8 +1,6 @@
 package jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Main {
     public static void main(String[] args) throws SQLException{
@@ -11,7 +9,7 @@ public class Main {
         DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","1986");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","1986");
 
-        //tabela na ksiazki:
+        //Stworzenie tabeli:
         String createTableSql = """
                 CREATE TABLE books (
                 id int AUTO_INCREMENT PRIMARY KEY,
@@ -21,14 +19,64 @@ public class Main {
                 );
                 """;
 
-        connection.createStatement().execute(createTableSql);
+        // connection.createStatement().execute(createTableSql);
 
-        // "jdbc:mysql://localhost:3306/sonoo","root","root"
+        //CRUD
+        //Create
+        //Dodanie książki:
+        Book book = new Book("Ubik", "Philip Dick", 250);
+        //SQL injection - rodzaj ataku hakerskiego
+        //Book book = new Book("a','a',1); drop database books; --", "Philip Dick", 250);
+        Statement statement = connection.createStatement();
+        //formatowany String - patrz reminder
+        String insertBookSql = String.format(" INSERT INTO books VALUES (0,'%s','%s',%d);",
+                book.getTitle(), book.getAuthor(), book.getPages());
+
+        //System.out.println(insertBookSql);
+        //statement.execute(insertBookSql);
+
+       /* żeby nie trzeba było podawać ID można taką składnię:
+        "INSERT INTO books(title, author, pages) VALUES ('%s','%s',%d);"*/
+
+        //Update:
+        String updateBookSql = """
+                UPDATE books
+                SET author='Philip K. Dick'
+                WHERE title='Ubik';
+                """;
+
+        //statement.execute(updateBookSql);
+
+        //Read
+        String selectAllSql = "SELECT * FROM books WHERE pages<275";
+
+        ResultSet resultSet = statement.executeQuery(selectAllSql);
+        while ( resultSet.next()){
+            int id = resultSet.getInt("id");
+            //  System.out.println(id );
+            String title = resultSet.getString("title");
+            // System.out.println(title);
+            String author = resultSet.getString("author");
+            //   System.out.println(author);
+            int pages = resultSet.getInt("pages");
+            //   System.out.println(pages);
+            Book dbBook = new Book(id, title, author, pages);
+            System.out.println(dbBook);
+        }
+
+        //Delete
+        String deleteSql = "DELETE FROM books WHERE id = 2";
+        //statement.execute(deleteSql);
 
 
-        /*Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/testdb",
-                "postgres", "MyPassword123");
-        connection.createStatement().execute("create table test(num int);");*/
+
+        //aby uniknąć SQL injection attack - zawsze należy używać PreparedStatement a nie Statement
+        String insertSql = "INSERT INTO books VALUES(0,?,?,?);";
+        PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+        preparedStatement.setString(1,"Czysta Architektura");
+        preparedStatement.setString(2, "Robert Martin");
+        preparedStatement.setInt(3, 350);
+        preparedStatement.execute();
 
 
     }
