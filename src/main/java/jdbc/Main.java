@@ -8,9 +8,9 @@ public class Main {
     public static void main(String[] args) throws SQLException{
         //create database books;
         //Wersja dla MySql
-        DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","1233456");
+        DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","12345678");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books","root","12345678");
-        //"postgres", "MyPassword123");
+
         //tabela na ksiazki:
         String createTableSql = """
                 CREATE TABLE books (
