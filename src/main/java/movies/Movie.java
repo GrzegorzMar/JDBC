@@ -1,6 +1,7 @@
 package movies;
 
 public class Movie {
+    private int id;
     private String title;
     private int premiereYear;
     private String genre;
@@ -13,10 +14,35 @@ public class Movie {
         this.rate = rate;
     }
 
+    public Movie(int id, String title, int premiereYear, String genre, int rate) {
+        this.id = id;
+        this.title = title;
+        this.premiereYear = premiereYear;
+        this.genre = genre;
+        this.rate = rate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getPremiereYear() {
+        return premiereYear;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", premiereYear=" + premiereYear +
                 ", genre='" + genre + '\'' +
                 ", rate=" + rate +
